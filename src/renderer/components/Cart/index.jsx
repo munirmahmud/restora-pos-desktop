@@ -57,6 +57,7 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
 
   const [customDiscount, setCustomDiscount] = useState('');
   const [customServiceCharge, setCustomServiceCharge] = useState('');
+  const [addFoodNoteToItem, setAddFoodNoteToItem] = useState({});
 
   useEffect(() => {
     setCustomDiscount(settings?.discountrate);
@@ -172,7 +173,6 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
           localStorage.removeItem('order_id');
         }
       } else if (data === 'placeOrder') {
-        console.log('cartItems', cartItems);
         window.insert_order_info.send('insert_order_info', {
           cartItems,
           customer_id: customerId,
@@ -232,10 +232,8 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
     setCustomerId(value);
   };
 
-  const [addFoodNoteToItem, setAddFoodNoteToItem] = useState({});
-
-  const handleFoodNoteModal = (cartData) => {
-    setAddFoodNoteToItem(cartData);
+  const handleFoodNoteModal = (foodItem) => {
+    setAddFoodNoteToItem(foodItem);
     setFoodNoteModal(true);
   };
 
@@ -606,11 +604,13 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
         setPremiumVersion={setPremiumVersion}
       />
 
-      <FoodNoteModal
-        foodNoteModal={foodNoteModal}
-        setFoodNoteModal={setFoodNoteModal}
-        addFoodNoteToItem={addFoodNoteToItem}
-      />
+      {foodNoteModal && (
+        <FoodNoteModal
+          foodNoteModal={foodNoteModal}
+          setFoodNoteModal={setFoodNoteModal}
+          addFoodNoteToItem={addFoodNoteToItem}
+        />
+      )}
 
       <Modal
         visible={openCalculator}
