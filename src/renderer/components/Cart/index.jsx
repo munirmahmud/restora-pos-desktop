@@ -90,11 +90,17 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
   }, [cartItems]);
 
   const handleDiscount = (e) => {
-    setCustomDiscount(e.target.value);
+    const { value } = e.target;
+    if (value < 0) return;
+
+    setCustomDiscount(value);
   };
 
   const handleServiceCharge = (e) => {
-    setCustomServiceCharge(e.target.value);
+    const { value } = e.target;
+    if (value < 0) return;
+
+    setCustomServiceCharge(value);
   };
 
   const selectTime = (time, timeString) => {
@@ -166,6 +172,7 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
           localStorage.removeItem('order_id');
         }
       } else if (data === 'placeOrder') {
+        console.log('cartItems', cartItems);
         window.insert_order_info.send('insert_order_info', {
           cartItems,
           customer_id: customerId,
@@ -456,11 +463,11 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
                 <b>Service Charge: </b>
                 {settings?.position === 'left' && settings.currency_icon}{' '}
                 <input
-                  type="text"
+                  type="number"
                   value={customServiceCharge}
                   onChange={handleServiceCharge}
                   style={{
-                    width: '35px',
+                    width: '55px',
                     border: '1px solid #ddd',
                     padding: 4,
                   }}
@@ -486,25 +493,15 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
                   <b>Discount: </b>
                   {settings?.discount_type === 1 && settings.currency}{' '}
                   <input
-                    type="text"
+                    type="number"
                     value={customDiscount}
                     onChange={handleDiscount}
                     style={{
-                      width: '35px',
+                      width: '55px',
                       border: '1px solid #ddd',
                       padding: 4,
                     }}
                   />
-                  {/* <span
-                    contentEditable
-                    style={{
-                      display: 'inline-block',
-                      textAlign: 'center',
-                      border: '1px solid #ddd',
-                    }}
-                  > */}
-                  {/* {settings?.discountrate ? settings?.discountrate : 0} */}
-                  {/* </span>{' '} */}
                   {settings?.discount_type === 2 && '(%)'}
                 </Col>
               )}
