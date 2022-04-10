@@ -218,8 +218,9 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
   };
 
   const handleFoodQuantity = (quantity, item) => {
-    const index = cartItems.findIndex((cartItem) => cartItem.id === item.id);
-    console.log('quantity', item);
+    const index = cartItems.findIndex(
+      (cartItem) => cartItem.cartId === item.cartId
+    );
 
     setCartItems([
       ...cartItems.slice(0, index),
