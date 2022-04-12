@@ -17,6 +17,20 @@
 
 .total_order_discount {
   padding: 0 15px;
+
+  .input_discount {
+    width: 60px;
+    border: 1px solid #ddd;
+    padding: 4px;
+
+    -webkit-appearance: inner-spin-button;
+    display: inline-block;
+    cursor: default;
+    flex: 0 0 auto;
+    align-self: stretch;
+    -webkit-user-select: none;
+    -webkit-user-modify: read-only;
+  }
 }
 
 .total_order_amount {
