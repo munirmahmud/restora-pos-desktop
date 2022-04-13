@@ -529,7 +529,7 @@ const Cart = ({ settings, cartItems, setCartItems, state }) => {
               {settings?.discount_type && (
                 <Col lg={6}>
                   <b>Discount: </b>
-                  {settings?.discount_type === 1 && settings.currency}{' '}
+                  {settings?.discount_type === 1 && settings.currency_icon}{' '}
                   <input
                     type="number"
                     value={customDiscount}
