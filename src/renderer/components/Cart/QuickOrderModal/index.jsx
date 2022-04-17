@@ -40,10 +40,13 @@ const QuickOrderModal = ({
   let calc = new CalculatePrice(settings, foodData);
 
   useEffect(() => {
-    setGrandTotal(
+    const totalAmount =
       calc.getTotalPrice() -
-        getDiscountAmount(settings, customDiscountAmount, calc.getTotalPrice())
-    );
+      getDiscountAmount(settings, customDiscountAmount, calc.getTotalPrice()) +
+      (invoiceData?.serviceCharge ? invoiceData?.serviceCharge : 0) +
+      (invoiceData?.vat ? invoiceData?.vat : 0);
+
+    setGrandTotal(totalAmount);
   }, [customDiscountAmount]);
 
   useEffect(() => {
@@ -66,7 +69,6 @@ const QuickOrderModal = ({
     }
   }, [foodItems]);
 
-  // TODO: print customer name
   useEffect(() => {
     getDataFromDatabase(
       'get_customer_names_response',
@@ -308,9 +310,7 @@ const QuickOrderModal = ({
                 <Title level={4}>Total Payable Amount</Title>
                 <h3>
                   {settings?.position === 'left' && settings.currency_icon}{' '}
-                  {grandTotal +
-                    invoiceData?.serviceCharge +
-                    (settings?.vat ? settings?.vat : 0)}{' '}
+                  {grandTotal}{' '}
                   {settings?.position === 'right' && settings.currency_icon}
                 </h3>
               </div>
